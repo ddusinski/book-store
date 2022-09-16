@@ -1,12 +1,6 @@
 const db = require("../models");
 const Book = db.books;
 
-
-const findBook = async function (id) {
-    await Book.findAll({ where: { id: id } })
-};
-
-
 //create new Book
 exports.create = (req, res) => {
     const book = {
@@ -34,27 +28,44 @@ exports.findAll = (req, res) => {
     });
 };
 
-//delete book
+delete book
 exports.delete = (req, res) => {
     const id = req.params.id;
+    // Book.findAll({ where: { id: id } }).then(data=>{console.log("I have found the book" + data.name);});
+    // console.log("I have found the book" + book.author);
 
-    // const book = await Book.findAll({ where: { id: id } });
-    const book = findBook(id);
-
-
-    console.log("I have found the book" + book);
-
-    Book.destroy({ where: { id: id } }).then(num => {
-        {
-            if (num == 1) {
-                res.send({ message: book + " was deleted successfully!" });
+    Book.findAll({ where: { id: id } }).then(data => {
+        const selectedBook = data[0];
+        console.log("I have found the book name:" + selectedBook.name);
+        console.log("I have found the book author:" + selectedBook.author);
+        Book.destroy({ where: { id: selectedBook.id } }).then(num => {
+            {
+                if (num == 1) {
+                    res.send({ message: JSON.stringify(selectedBook, null, 4) + " was deleted successfully!" });
+                }
+                else {
+                    res.send({ message: "Cannot delete Book with id= " + id });
+                }
             }
-            else {
-                res.send({ message: "Cannot delete Book with id= " + id });
-            }
-        }
-    }).catch(err => {
-        res.status(500).send({ message: "Cannot delete Book with id= " + id })
-    })
+
+        }).catch(err => {
+            res.status(500).send({ message: "Cannot delete Book with id= " + id })
+        })
+
+
+
+    });
 };
 
+// const checkBook = async (id) => {
+//     const tempBook = await Book.findAll({ where: { id: id } });
+//     console.log("hello book: " + JSON.stringify(tempBook, null, 4));
+//     console.log("hello book: " + tempBook[0].author);
+//     console.log("is  book instance: " + tempBook[0] instanceof Book);
+//     const testingBook = Book.build({ name: "testBook", author: "Test author" });
+//     console.log("hello testingBook: " + testingBook.author);
+// };
+
+// exports.delete = (req, res) => {
+//     checkBook(req.params.id);
+// };

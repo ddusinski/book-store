@@ -7,5 +7,5 @@ vue-frontend/.DS_Store
 vue-frontend/node_modules/
 vue-frontend/dist
 
-
+.vscode/
 
