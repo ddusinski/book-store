@@ -11,23 +11,23 @@ td {
     <table class="table">
       <tr>
         <th>Index</th>
-        <th>Book ID</th>
+        <th>ISSN</th>
         <th>Name</th>
         <th>Author</th>
         <th>Edit</th>
       </tr>
-      <tr v-for="(book, index) in books" :key="book.id">
+      <tr v-for="(book, index) in books" :key="book.issn">
         <td>{{ index }}</td>
-        <td>{{ book.id }}</td>
+        <td>{{ book.issn }}</td>
         <td>{{ book.name }}</td>
         <td>{{ book.author }}</td>
         <td>
-          <button @click="deleteBook(book.id)">Delete</button>
+          <button @click="deleteBook(book.issn)">Delete</button>
         </td>
       </tr>
       <tr>
         <td>New:</td>
-        <td>ID</td>
+        <td><input type="number" id="issn" v-model="issn"></td>
         <td><input type="text" id="name" v-model="bookName"></td>
         <td><input type="text" id="author" v-model="bookAuthor"></td>
         <td>
@@ -49,6 +49,7 @@ export default {
       books: null,
       bookName: "",
       bookAuthor: "",
+      issn: "",
       status: ""
     };
   },
@@ -58,7 +59,7 @@ export default {
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ "name": this.bookName, "author": this.bookAuthor })
+          body: JSON.stringify({ "name": this.bookName, "author": this.bookAuthor, "issn": this.issn })
         };
         fetch("http://localhost:3000/api/books/", requestOptions)
           .then(response => response.json())
@@ -75,6 +76,7 @@ export default {
 
     },
     deleteBook(id) {
+      console.log("ID: " + id);
       fetch("http://localhost:3000/api/books/" + id, { method: "DELETE" })
         .then(response => response.json())
         .then(response => { this.status = response })

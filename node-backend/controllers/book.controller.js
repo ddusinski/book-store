@@ -5,7 +5,8 @@ const Book = db.books;
 exports.create = (req, res) => {
     const book = {
         author: req.body.author,
-        name: req.body.name
+        name: req.body.name,
+        issn: req.body.issn
     };
     Book.create(book).then(data => {
         res.send(data);
@@ -32,13 +33,13 @@ delete book
 exports.delete = (req, res) => {
     const id = req.params.id;
     // Book.findAll({ where: { id: id } }).then(data=>{console.log("I have found the book" + data.name);});
-    // console.log("I have found the book" + book.author);
+    console.log("Found following ID: " + id);
 
-    Book.findAll({ where: { id: id } }).then(data => {
+    Book.findAll({ where: { issn: id } }).then(data => {
         const selectedBook = data[0];
-        console.log("I have found the book name:" + selectedBook.name);
-        console.log("I have found the book author:" + selectedBook.author);
-        Book.destroy({ where: { id: selectedBook.id } }).then(num => {
+        // console.log("I have found the book name:" + selectedBook.name);
+        // console.log("I have found the book author:" + selectedBook.author);
+        Book.destroy({ where: { issn: selectedBook.issn } }).then(num => {
             {
                 if (num == 1) {
                     res.send({ message: JSON.stringify(selectedBook, null, 4) + " was deleted successfully!" });
