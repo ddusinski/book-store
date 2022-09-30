@@ -1,0 +1,16 @@
+module.exports = (sequelize, Sequelize) => {
+    const StockItem = sequelize.define("shopping-basket", {
+        bookId: {
+            type: Sequelize.INTEGER,
+            references: { model: "book", key: "issn" },
+            primaryKey: true
+        },
+        adress: {
+            type: Sequelize.STRING
+        },
+        phoneNumber: {
+            type: Sequelize.INTEGER,
+        }
+    });
+    return Book;
+}

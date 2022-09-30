@@ -6,7 +6,9 @@ td {
 }
 </style>
 <template>
-  <div class="about">
+  <a href="stock.html">Go to Stock</a>
+  <h1>Welcome to books</h1>
+  <div class="book-list">
     <p>status is: {{ status }}</p>
     <table class="table">
       <tr>
@@ -43,7 +45,7 @@ td {
 // import { response } from 'express';
 
 export default {
-  name: "get-request",
+  name: "book-component",
   data() {
     return {
       books: null,

@@ -29,7 +29,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-delete book
+//delete book
 exports.delete = (req, res) => {
     const id = req.params.id;
     // Book.findAll({ where: { id: id } }).then(data=>{console.log("I have found the book" + data.name);});
