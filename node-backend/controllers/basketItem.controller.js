@@ -1,5 +1,5 @@
 const db = require("../models");
-const Basket = db.baskets;
+const BasketOwner = db.basketOwners;
 const Book = db.books;
 const BasketItem = db.basketItems;
 
@@ -9,7 +9,7 @@ exports.create = (req, res) => {
         count: req.body.count
     };
 
-    Basket.findAll({ where: { owner: req.body.owner } }).then(ownerData => {
+    BasketOwner.findAll({ where: { ownerName: req.body.ownerName } }).then(ownerData => {
         const selectedOwner = ownerData[0];
         Book.findAll({ where: { issn: req.body.issn } }).then(data => {
             const selectedBook = data[0];
@@ -29,7 +29,7 @@ exports.create = (req, res) => {
 
 // find all basketItems
 exports.findAll = (req, res) => {
-    BasketItem.findAll().then(data => {
+    BasketItem.findAll({ include: { all: true } }).then(data => {
         if (data) {
             res.send(data)
         } else {
@@ -38,5 +38,18 @@ exports.findAll = (req, res) => {
     }).catch(err => {
         res.status(500).send({ message: "Error found: " + err.me })
     });
+};
+
+//delete basketItem
+exports.delete = (req, res) => {
+    bookItemId = req.params.id
+    BasketItem.destroy({ where: { id: bookItemId } }).then(num => {
+        {
+            res.send({ message: "Book Item with ID: " + bookItemmId + " was deleted successfully!" });
+        }
+
+    }).catch(err => {
+        res.status(500).send({ message: "Cannot delete Book with id= " + bookItemId })
+    })
 };
 

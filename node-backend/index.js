@@ -22,21 +22,21 @@ app.use(setUser);
 //seq part
 const db = require("./models/index");
 db.sequelize.sync();
-require("./routes/book.routes.js")(app);
+require("./routes/bookShop.routes.js")(app);
 //
 
 
-app.get("/", function (req, res) {
-    res.send("hello world, from express!");
-});
+// app.get("/", function (req, res) {
+//     res.send("hello world, from express!");
+// });
 
-app.get("/books", authUser, authRole(ROLE.ADMIN), (req, res) => {
-    res.json(books);
-});
+// app.get("/books", authUser, authRole(ROLE.ADMIN), (req, res) => {
+//     res.json(books);
+// });
 
-app.get("/store", authUser, (req, res) => {
-    res.send("Store Page");
-})
+// app.get("/store", authUser, (req, res) => {
+//     res.send("Store Page");
+// })
 
 function setUser(req, res, next) {
     const userId = req.body.userId;

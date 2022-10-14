@@ -1,17 +1,18 @@
 module.exports = app => {
     const books = require("../controllers/book.controller.js");
-    const baskets = require("../controllers/basket.controller.js");
+    const basketOwners = require("../controllers/basketOwner.controller.js");
     const basketItems = require("../controllers/basketItem.controller.js");
     const router = require("express").Router();
     router.post("/books/", books.create);
     router.get("/books/findAll", books.findAll);
     router.delete("/books/:id", books.delete);
 
-    router.post("/basket/", baskets.create);
-    router.get("/basket/findAll", baskets.findAll);
+    router.post("/basketOwners/", basketOwners.create);
+    router.get("/basketOwners/findAll", basketOwners.findAll);
 
-    router.post("/basketItem/", basketItems.create);
-    router.get("/basketItem/findAll", basketItems.findAll);
+    router.post("/basketItems/", basketItems.create);
+    router.get("/basketItems/findAll", basketItems.findAll);
+    router.delete("/basketItems/:id", basketItems.delete);
 
     app.use("/api/", router);
 }

@@ -1,14 +1,14 @@
 const db = require("../models");
-const Basket = db.baskets;
+const BasketOwner = db.basketOwners;
 
-//create new basket
+//create new basketOwner
 exports.create = (req, res) => {
     const basket = {
-        owner: req.body.owner,
+        ownerName: req.body.ownerName,
         phone: req.body.phone
     };
 
-    Basket.create(basket)
+    BasketOwner.create(basket)
         .then(newBasket => {
             console.log("new basked was created");
             res.send(newBasket);
@@ -20,7 +20,8 @@ exports.create = (req, res) => {
 
 // find all baskets
 exports.findAll = (req, res) => {
-    Basket.findAll().then(data => {
+    // BasketOwner.findAll({ include: { all: true } }).then(data => {
+    BasketOwner.findAll().then(data => {
         if (data) {
             res.send(data)
         } else {

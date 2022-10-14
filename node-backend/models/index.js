@@ -14,12 +14,12 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.books = require("./book")(sequelize, Sequelize);
 db.basketItems = require("./basketItem")(sequelize, Sequelize);
-db.baskets = require("./basket.js")(sequelize, Sequelize);
+db.basketOwners = require("./basketOwner")(sequelize, Sequelize);
 
 db.books.hasMany(db.basketItems);
 db.basketItems.belongsTo(db.books);
 
-db.baskets.hasMany(db.basketItems);
-db.basketItems.belongsTo(db.baskets);
+db.basketOwners.hasMany(db.basketItems);
+db.basketItems.belongsTo(db.basketOwners);
 
 module.exports = db;

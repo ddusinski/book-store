@@ -1,10 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
-    const Basket = sequelize.define("basket", {
-        owner: {
+    const BasketOwner = sequelize.define("basketOwner", {
+        ownerName: {
             type: Sequelize.STRING,
             primaryKey: true
         },
         phone: { type: Sequelize.INTEGER }
     });
-    return Basket;
+    return BasketOwner;
 }
