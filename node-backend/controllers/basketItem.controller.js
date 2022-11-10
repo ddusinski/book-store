@@ -30,6 +30,7 @@ exports.create = (req, res) => {
 // find all basketItems
 exports.findAll = (req, res) => {
     BasketItem.findAll({ include: { all: true } }).then(data => {
+    // BasketItem.findAll().then(data => {
         if (data) {
             res.send(data)
         } else {
@@ -49,7 +50,7 @@ exports.delete = (req, res) => {
         }
 
     }).catch(err => {
-        res.status(500).send({ message: "Cannot delete Book with id= " + bookItemId })
+        res.status(500).send({ message: "Cannot delete BasketItem with id= " + bookItemId })
     })
 };
 

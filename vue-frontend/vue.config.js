@@ -18,6 +18,13 @@ module.exports = {
       filename: "stock.html",
       title: "Stock",
       chunks: ["chunk-vendors", "chunk-common", "stock"]
+    },
+    book: {
+      entry: "./src/pages/book/main.js",
+      template: "public/index.html",
+      filename: "book.html",
+      title: "Book",
+      chunks: ["chunk-vendors", "chunk-common", "book"]
     }
   }
 }

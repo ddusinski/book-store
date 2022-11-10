@@ -1,12 +1,25 @@
 <template>
-  <a href="index.html">Go to Books</a>
+  <li>
+    <ul><a href="index.html">Go to Index</a></ul>
+    <ul><a href="book.html">Go to Books</a></ul>
+  </li>
   <h1>Welcome to stock</h1>
   <!-- <li v-for="item in basketItems" v-bind:key="item.id">
     {{item}}
   </li> -->
+
+  <!-- <li v-for="owner in basketOwners" v-bind:key="owner.id">
+    <ul> owner - {{ owner.ownerName }}</ul>
+  </li> -->
+  <!-- <h1>{{ this.basketOwners }}</h1> -->
+
+  <!-- <option v-for="owner in basketOwners" v-bind:key="owner.id">{{ owner.ownerName }}</option> -->
   <br>
   <br>
   Stock list
+  <!-- <br>the name of the owner is: {{ownerName}}
+  <br>all basket owners are: {{basketOwners}} -->
+
   <div class="basket-item-list">
     <p>status is: {{ status }}</p>
     <table class="table">
@@ -21,12 +34,13 @@
         <th>Action</th>
       </tr>
       <tr v-for="item in basketItems" v-bind:key="item.id">
+
         <td>{{ item.id }}</td>
-        <td>{{ item.basketOwner.ownerName }}</td>
-        <td>{{ item.basketOwner.phone }}</td>
-        <td>{{ item.book.name }}</td>
-        <td>{{ item.book.author }}</td>
-        <td>{{ item.book.issn }}</td>
+        <td v-if="item.basketOwner">{{ item.basketOwner.ownerName }}</td>
+        <td v-if="item.basketOwner">{{ item.basketOwner.phone }}</td>
+        <td v-if="item.book">{{ item.book.name }}</td>
+        <td v-if="item.book">{{ item.book.author }}</td>
+        <td>{{ item.bookIssn }}</td>
         <td>{{ item.count }}</td>
         <td>
           <button @click="deleteBasketItem(item.id)">Delete Item</button>
@@ -37,19 +51,18 @@
         <td>
           <select v-model="ownerName" @change="updateOwnerPhone(ownerName)">
             <option disabled value="">Please select One User</option>
-            <option v-for="owner in basketOwners" v-bind:key="owner.id">{{owner.ownerName}}</option>
+            <option v-for="owner in basketOwners" v-bind:key="owner.id">{{ owner.ownerName }}</option>
           </select>
         </td>
-        <td>{{ownerPhone}}</td>
+        <td>{{ ownerPhone }}</td>
         <td>
-          <select v-model="bookName" @change="updateBookAuthorIssn(bookName)">
+          <select v-model="bookTitle" @change="updateBookAuthorIssn(bookTitle)">
             <option disabled value="">Please select One Book</option>
-            <option v-for="book in books" v-bind:key="book.id">{{book.name}}</option>
+            <option v-for="book in books" v-bind:key="book.id">{{ book.name }}</option>
           </select>
-
         </td>
-        <td>{{bookAuthor}}</td>
-        <td>{{bookIssn}}</td>
+        <td>{{ bookAuthor }}</td>
+        <td>{{ bookIssn }}</td>
         <td><input type="text" id="bookCount" v-model="bookCount"></td>
         <td>
           <button v-on:click="addBasketItem">Add basket item</button>
@@ -64,36 +77,38 @@ export default {
   name: "stock-component",
   data() {
     return {
+      status: "null",
       books: null,
       basketItems: null,
       basketOwners: null,
-      ownerName: null,
-      ownerPhone: null,
-      bookAuthor: "testAuthor",
-      bookIssn: "testIssn",
-      bookCount: null
+      ownerName: "",
+      ownerPhone: 0,
+      bookAuthor: "",
+      bookTitle: "",
+      bookIssn: "",
+      bookCount: 0
     }
   },
   methods: {
     getBasketItems() {
       fetch("http://localhost:3000/api/basketItems/findAll")
-        .then(response => response.json())
-        .then(response => {
-          this.basketItems = response
-        });
-    }, getBasketOwners() {
+        .then(basketItemResponse => basketItemResponse.json())
+        .then(data => {
+          console.log(data);
+          this.basketItems = data;
+        })
+    },
+    getBasketOwners() {
       fetch("http://localhost:3000/api/basketOwners/findAll")
-        .then(response => response.json())
-        .then(response => {
-          this.basketOwners = response
-        });
+        .then(ownerResponse => ownerResponse.json())
+        .then(ownerResponse => { this.basketOwners = ownerResponse })
     },
     getBooks() {
       fetch("http://localhost:3000/api/books/findAll")
-        .then(response => response.json())
-        .then(response => {
-          this.books = response
-        });
+        .then(bookResponse => bookResponse.json())
+        .then(data => {
+          this.books = data;
+        })
     },
     updateOwnerPhone(userName) {
       var selectedUser = this.basketOwners.filter(obj => { return obj.ownerName === userName });
@@ -112,15 +127,25 @@ export default {
       }
       fetch("http://localhost:3000/api/basketItems/", requestOptions)
         .then(response => response.json())
-        .then(response => { this.status = response })
-        .then(() => this.getBasketItems());
+        .then(() => { this.cleanBasketItemForm(); this.getBasketItems() });
     },
     deleteBasketItem(id) {
-      console.log("deleteting basketItem with ID: "+id);
+      console.log("deleteting basketItem with ID: " + id);
       fetch("http://localhost:3000/api/basketItems/" + id, { method: "DELETE" })
         .then(response => response.json())
-        .then(response => { this.status = response })
-        .then(() => this.getBasketItems());
+        .then(() => {
+          this.cleanBasketItemForm();
+          this.getBasketItems()
+        });
+    },
+    cleanBasketItemForm() {
+      this.getBasketItems();
+      this.ownerName = null;
+      this.ownerPhone = null;
+      this.bookAuthor = null;
+      this.bookIssn = null;
+      this.bookCount = null;
+      this.bookTitle = null;
     }
   },
   created() {
