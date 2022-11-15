@@ -20,7 +20,6 @@ exports.create = (req, res) => {
 
 // find all baskets
 exports.findAll = (req, res) => {
-    // BasketOwner.findAll({ include: { all: true } }).then(data => {
     BasketOwner.findAll().then(data => {
         if (data) {
             res.send(data)
@@ -30,4 +29,16 @@ exports.findAll = (req, res) => {
     }).catch(err => {
         res.status(500).send({ message: "Error found: " + err.me })
     });
+};
+
+//delete basket owner
+exports.delete = (req, res) => {
+    const basketOwnerPhone = req.params.id
+    BasketOwner.destroy({ where: { phone: basketOwnerPhone } }).then(num => {
+        {
+            res.send({ message: "basket owner Item with ID: " + basketOwnerPhone + " was deleted successfully!" });
+        }
+    }).catch(err => {
+        res.status(500).send({ message: "Cannot delete BasketItem with id= " + basketOwnerPhone })
+    })
 };

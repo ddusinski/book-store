@@ -2,24 +2,11 @@
   <li>
     <ul><a href="index.html">Go to Index</a></ul>
     <ul><a href="book.html">Go to Books</a></ul>
+    <ul><a href="owner.html">Go to Basket owner</a></ul>
   </li>
   <h1>Welcome to stock</h1>
-  <!-- <li v-for="item in basketItems" v-bind:key="item.id">
-    {{item}}
-  </li> -->
-
-  <!-- <li v-for="owner in basketOwners" v-bind:key="owner.id">
-    <ul> owner - {{ owner.ownerName }}</ul>
-  </li> -->
-  <!-- <h1>{{ this.basketOwners }}</h1> -->
-
-  <!-- <option v-for="owner in basketOwners" v-bind:key="owner.id">{{ owner.ownerName }}</option> -->
   <br>
-  <br>
-  Stock list
-  <!-- <br>the name of the owner is: {{ownerName}}
-  <br>all basket owners are: {{basketOwners}} -->
-
+  <br>Stock list
   <div class="basket-item-list">
     <p>status is: {{ status }}</p>
     <table class="table">
@@ -34,7 +21,6 @@
         <th>Action</th>
       </tr>
       <tr v-for="item in basketItems" v-bind:key="item.id">
-
         <td>{{ item.id }}</td>
         <td v-if="item.basketOwner">{{ item.basketOwner.ownerName }}</td>
         <td v-if="item.basketOwner">{{ item.basketOwner.phone }}</td>

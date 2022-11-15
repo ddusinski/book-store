@@ -6,10 +6,10 @@ const port = 3000;
 const { users, ROLE } = require("./access")
 const { authUser, authRole } = require("./basicAuth")
 
-let books = [
-    { title: "test title1", author: "test author1" },
-    { title: "test title2", author: "test author2" }
-];
+// let books = [
+//     { title: "test title1", author: "test author1" },
+//     { title: "test title2", author: "test author2" }
+// ];
 
 app.use(cors());
 

@@ -17,6 +17,7 @@ td {
   <li>
     <ul><a href="index.html">Go to Index</a></ul>
     <ul><a href="stock.html">Go to Stock</a></ul>
+    <ul><a href="owner.html">Go to Basket owner</a></ul>
   </li>
   <h1 class="box">Welcome to books</h1>
   <div class="book-list">

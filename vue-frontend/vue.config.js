@@ -25,6 +25,13 @@ module.exports = {
       filename: "book.html",
       title: "Book",
       chunks: ["chunk-vendors", "chunk-common", "book"]
+    },
+    owner: {
+      entry: "./src/pages/owner/main.js",
+      template: "public/index.html",
+      filename: "owner.html",
+      title: "Owner",
+      chunks: ["chunk-vendors", "chunk-common", "owner"]
     }
   }
 }

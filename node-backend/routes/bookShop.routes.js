@@ -9,6 +9,7 @@ module.exports = app => {
 
     router.post("/basketOwners/", basketOwners.create);
     router.get("/basketOwners/findAll", basketOwners.findAll);
+    router.delete("/basketOwners/:id", basketOwners.delete);
 
     router.post("/basketItems/", basketItems.create);
     router.get("/basketItems/findAll", basketItems.findAll);
