@@ -1,0 +1,6 @@
+{
+    "scripts": {
+        "frontend": "cd vue-frontend; npm run serve",
+        "backend": "cd node-backend; node index.js"
+    }
+}
