@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "frontend": "cd vue-frontend; npm run serve",
-        "backend": "cd node-backend; node index.js"
+        "start": "cd vue-frontend; npm run serve",
+        "heroku-postbuild": "cd node-backend && nmp install && npm run build"
     }
 }
